@@ -1,4 +1,3 @@
-from logic.controller.console import Console
 from logic.utils.patient_errors import PatientIdNotIntegerOrNotPositive
 
 YES_COMMANDS = ["yes", "y", "да"]
@@ -6,8 +5,8 @@ YES_COMMANDS = ["yes", "y", "да"]
 
 class DialogWithUser:
 
-    def __init__(self):
-        self.console = Console()
+    def __init__(self, console):
+        self.console = console
 
     def ask_user_patient_id(self) -> int:
         try:

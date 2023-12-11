@@ -1,6 +1,7 @@
 
 from unittest.mock import MagicMock
 
+from logic.controller.console import Console
 from logic.use_case.command_executor import CommandExecutor
 from logic.controller.dialog_with_user import DialogWithUser
 from logic.use_case.patient_commands import PatientCommands
@@ -10,7 +11,7 @@ from logic.use_case.statistics_commands import StatisticsCommands
 
 class TestsCommandExecutor:
     # def test_unknown_command(self):
-    #     dialog_with_user = DialogWithUser()
+    #     dialog_with_user = DialogWithUser(Console())
     #     dialog_with_user.ask_user_for_input = MagicMock(return_value="unknown command")
     #     dialog_with_user.print_to_user_output = MagicMock()
     #
@@ -23,14 +24,14 @@ class TestsCommandExecutor:
     #     dialog_with_user.print_to_user_output.assert_called_with("Неизвестная команда! Попробуйте еще раз!")
 
     def test_stop_command(self):
-        dialog_with_user = DialogWithUser()
+        dialog_with_user = DialogWithUser(Console())
 
         dialog_with_user.ask_user_for_input = MagicMock(return_value="stop")
         dialog_with_user.print_to_user_output = MagicMock()
 
-        db = PatientsStatusListHandler([])
-        statistics_command = StatisticsCommands(db)
-        patient_command = PatientCommands(dialog_with_user, db)
+        patients_list = PatientsStatusListHandler([])
+        statistics_command = StatisticsCommands(patients_list)
+        patient_command = PatientCommands(dialog_with_user, patients_list)
         executor = CommandExecutor(dialog_with_user, statistics_command, patient_command, )
 
         executor.start_operation()
