@@ -1,6 +1,6 @@
-from logic.dialog_with_user import DialogWithUser
-from logic.patient_commands import PatientCommands
-from logic.statistics_commands import StatisticsCommands
+from logic.controller.dialog_with_user import DialogWithUser
+from logic.use_case.patient_commands import PatientCommands
+from logic.use_case.statistics_commands import StatisticsCommands
 
 GET_STATUS_COMMANDS = ["get status", "узнать статус пациента", "1"]
 STATUS_UP_COMMANDS = ["status up", "повысить статус пациента", "2"]
@@ -24,16 +24,15 @@ class CommandExecutor:
 
     def start_operation(self) -> None:
         while True:
-            command = self.dialog_with_user.get_msg_from_user("Введите команду: ")
+            command = self.dialog_with_user.ask_user_for_input("Введите команду: ")
             if command in STOP_COMMANDS:
-                self.dialog_with_user.send_msg_to_user("Сеанс завершён")
+                self.dialog_with_user.print_to_user_output("Сеанс завершён")
                 break
             elif command not in COMMANDS:
-                self.dialog_with_user.send_msg_to_user("Неизвестная команда! Попробуйте еще раз!")
-                break
+                self.dialog_with_user.print_to_user_output("Неизвестная команда! Попробуйте еще раз!")
             elif command in STATISTICS_COMMANDS:
                 statistics = self.statistics_commands.calculate_statistics()
-                self.dialog_with_user.send_msg_to_user(statistics)
+                self.dialog_with_user.print_to_user_output(statistics)
             elif command in GET_STATUS_COMMANDS:
                 self.patient_commands.get_patient_status()
             elif command in STATUS_UP_COMMANDS:

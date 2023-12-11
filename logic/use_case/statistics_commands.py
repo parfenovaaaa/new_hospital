@@ -1,14 +1,14 @@
 from collections import Counter
 
-from logic.patient_db import PATIENT_STATUS, PatientsDB
+from logic.core.patients_status_list_handler import PATIENT_STATUS, PatientsStatusListHandler
 
 
 class StatisticsCommands:
-    def __init__(self, patients_db: PatientsDB):
-        self.patients_db = patients_db
+    def __init__(self, patients_status_list: PatientsStatusListHandler):
+        self.patients_status_list = patients_status_list
 
     def calculate_statistics(self) -> str:
-        raw_data = self.patients_db.get_calculate_statistics_data()
+        raw_data = self.patients_status_list.get_calculate_statistics_data()
         return self._create_calculate_statistics_output(raw_data["statistics"], raw_data["patients_amount"])
 
     @staticmethod

@@ -1,18 +1,18 @@
 from unittest.mock import MagicMock
 
-from logic.dialog_with_user import DialogWithUser
-from logic.patient_commands import PatientCommands
-from logic.patient_db import PatientsDB
+from logic.controller.dialog_with_user import DialogWithUser
+from logic.use_case.patient_commands import PatientCommands
+from logic.core.patients_status_list_handler import PatientsStatusListHandler
 
 
 class TestDischargePatient:
     def test_discharge_patient(self):
         dialog_with_user = DialogWithUser()
+        dialog_with_user.ask_user_patient_id = MagicMock(return_value=2)
+        dialog_with_user.print_to_user_output = MagicMock()
 
-        dialog_with_user.get_patient_id = MagicMock(return_value=2)
-        dialog_with_user.send_msg_to_user = MagicMock()
-
-        db = PatientsDB([1, 1, 1])
-        patient_command = PatientCommands(dialog_with_user, db)
-        patient_command.discharge_patient()
-        dialog_with_user.send_msg_to_user.assert_called_with("Пациент выписан из больницы")
+        patients_list = PatientsStatusListHandler([1, 1, 1])
+        patients_command = PatientCommands(dialog_with_user, patients_list)
+        patients_command.discharge_patient()
+        dialog_with_user.print_to_user_output.assert_called_with("Пациент выписан из больницы")
+        assert patients_list.patients_status_list == [1, 1]
