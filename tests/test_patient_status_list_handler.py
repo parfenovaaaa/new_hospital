@@ -10,8 +10,9 @@ class TestPatientsStatusListHandler:
         patients_list.make_patient_status_down(2)
         assert patients_list.patients_status_list == [1, 0, 1]
 
-    def test_check_possibility_of_patient_status_down_success(self):
-        patients_list = PatientsStatusListHandler([2])
+    @pytest.mark.parametrize("patient_status", [1, 2, 3])
+    def test_check_possibility_of_patient_status_down_success(self, patient_status):
+        patients_list = PatientsStatusListHandler([patient_status])
         assert patients_list.check_possibility_of_patient_status_down(1)
 
     def test_check_possibility_of_patient_status_down_fail(self):
@@ -23,8 +24,9 @@ class TestPatientsStatusListHandler:
         patients_list.make_patient_status_up(2)
         assert patients_list.patients_status_list == [0, 1, 0]
 
-    def test_check_possibility_of_patient_status_up_true(self):
-        patients_list = PatientsStatusListHandler([2])
+    @pytest.mark.parametrize("patient_status", [0, 1, 2])
+    def test_check_possibility_of_patient_status_up_true(self, patient_status):
+        patients_list = PatientsStatusListHandler([patient_status])
         assert patients_list.check_possibility_of_patient_status_up(1)
 
     def test_check_possibility_of_patient_status_up_false(self):
@@ -62,4 +64,4 @@ class TestPatientsStatusListHandler:
         patients_list = PatientsStatusListHandler([1])
         with pytest.raises(PatientIdNotExist) as e:
             patients_list._get_patient_index(2)
-            assert e.message == "Ошибка! Нет пациента с таким ID"
+            assert e.value.message == "Ошибка! Нет пациента с таким ID"

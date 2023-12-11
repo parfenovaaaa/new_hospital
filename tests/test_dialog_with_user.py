@@ -15,7 +15,7 @@ class TestDialogWithUser:
         result = dialog_with_user.ask_user_patient_id()
         assert result == int(patient_id)
 
-    @pytest.mark.parametrize("patient_id", [-1, "sdfgsd", 0])
+    @pytest.mark.parametrize("patient_id", [-1, "two", 0])
     def test_ask_user_patient_id_with_error(self, patient_id):
         dialog_with_user = DialogWithUser(Console())
         dialog_with_user.ask_user_for_input = MagicMock(return_value=patient_id)
@@ -41,12 +41,10 @@ class TestDialogWithUser:
     def test_ask_discharge_patient_yes(self, command):
         dialog_with_user = DialogWithUser(Console())
         dialog_with_user.ask_user_for_input = MagicMock(return_value=command)
-        result = dialog_with_user.ask_discharge_patient()
-        assert result
+        assert dialog_with_user.ask_discharge_patient()
 
     @pytest.mark.parametrize("command", ["ye", "no", "д", "нет"])
     def test_ask_discharge_patient_no(self, command):
         dialog_with_user = DialogWithUser(Console())
         dialog_with_user.ask_user_for_input = MagicMock(return_value=command)
-        result = dialog_with_user.ask_discharge_patient()
-        assert not result
+        assert not dialog_with_user.ask_discharge_patient()
