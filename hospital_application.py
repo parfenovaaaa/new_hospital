@@ -13,7 +13,7 @@ COMMANDS = (
 )
 
 
-class CommandExecutor:
+class HospitalApplication:
     def __init__(
             self, dialog_with_user: DialogWithUser,
             statistics_commands: StatisticsCommands, patient_commands: PatientCommands
@@ -31,8 +31,7 @@ class CommandExecutor:
             elif command not in COMMANDS:
                 self.dialog_with_user.print_to_user_output("Неизвестная команда! Попробуйте еще раз!")
             elif command in STATISTICS_COMMANDS:
-                statistics = self.statistics_commands.calculate_statistics()
-                self.dialog_with_user.print_to_user_output(statistics)
+                self.statistics_commands.calculate_statistics()
             elif command in GET_STATUS_COMMANDS:
                 self.patient_commands.get_patient_status()
             elif command in STATUS_UP_COMMANDS:

@@ -13,7 +13,7 @@ PATIENT_STATUS = {
 
 class PatientsStatusListHandler:
     def __init__(self, patients_status_list):
-        self.patients_status_list = patients_status_list
+        self.patients_status_list = patients_status_list if patients_status_list else [1 for _ in range(0, 200)]
 
     def _get_patient_index(self, patient_id: int) -> int:
         try:

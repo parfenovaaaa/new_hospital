@@ -1,8 +1,8 @@
 
 from unittest.mock import MagicMock
 
-from logic.controller.console import Console
-from logic.use_case.command_executor import CommandExecutor
+from logic.utils.console import Console
+from hospital_application import HospitalApplication
 from logic.controller.dialog_with_user import DialogWithUser
 from logic.use_case.patient_commands import PatientCommands
 from logic.core.patients_status_list_handler import PatientsStatusListHandler
@@ -32,7 +32,7 @@ class TestsCommandExecutor:
         patients_list = PatientsStatusListHandler([])
         statistics_command = StatisticsCommands(patients_list)
         patient_command = PatientCommands(dialog_with_user, patients_list)
-        executor = CommandExecutor(dialog_with_user, statistics_command, patient_command, )
+        executor = HospitalApplication(dialog_with_user, statistics_command, patient_command, )
 
         executor.start_operation()
         dialog_with_user.print_to_user_output.assert_called_with("Сеанс завершён")

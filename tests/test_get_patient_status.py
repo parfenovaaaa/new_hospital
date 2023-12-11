@@ -2,7 +2,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from logic.controller.console import Console
+from logic.utils.console import Console
 from logic.controller.dialog_with_user import DialogWithUser
 from logic.use_case.patient_commands import PatientCommands
 from logic.core.patients_status_list_handler import PatientsStatusListHandler
