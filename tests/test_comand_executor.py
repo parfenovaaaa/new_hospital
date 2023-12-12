@@ -20,38 +20,38 @@ class TestsHospitalApplication:
         mock_console = MockConsole()
         application = prepare_application(mock_console, [])
 
-        mock_console.add_expected_request_msg_and_return_input("Введите команду: ", "команда")
+        mock_console.add_expected_message_and_returned_input("Введите команду: ", "команда")
         mock_console.add_output_message("Неизвестная команда! Попробуйте еще раз!")
-        mock_console.add_expected_request_msg_and_return_input("Введите команду: ", "stop")
+        mock_console.add_expected_message_and_returned_input("Введите команду: ", "stop")
         mock_console.add_output_message("Сеанс завершён")
 
         application.start_operation()
 
-        mock_console.assert_called_mocks()
+        mock_console.assert_no_mocks_left()
 
     def test_patient_id_invalid_input(self):
 
         mock_console = MockConsole()
         application = prepare_application(mock_console, [1, 1])
-        mock_console.add_expected_request_msg_and_return_input("Введите команду: ", "узнать статус пациента")
-        mock_console.add_expected_request_msg_and_return_input("Введите ID пациента:", "-1")
+        mock_console.add_expected_message_and_returned_input("Введите команду: ", "узнать статус пациента")
+        mock_console.add_expected_message_and_returned_input("Введите ID пациента:", "-1")
         mock_console.add_output_message("Ошибка! ID пациента должно быть числом(целым и положительным)")
 
-        mock_console.add_expected_request_msg_and_return_input("Введите команду: ", "узнать статус пациента")
-        mock_console.add_expected_request_msg_and_return_input("Введите ID пациента:", "0")
+        mock_console.add_expected_message_and_returned_input("Введите команду: ", "узнать статус пациента")
+        mock_console.add_expected_message_and_returned_input("Введите ID пациента:", "0")
         mock_console.add_output_message("Ошибка! ID пациента должно быть числом(целым и положительным)")
 
-        mock_console.add_expected_request_msg_and_return_input("Введите команду: ", "узнать статус пациента")
-        mock_console.add_expected_request_msg_and_return_input("Введите ID пациента:", "two")
+        mock_console.add_expected_message_and_returned_input("Введите команду: ", "узнать статус пациента")
+        mock_console.add_expected_message_and_returned_input("Введите ID пациента:", "two")
         mock_console.add_output_message("Ошибка! ID пациента должно быть числом(целым и положительным)")
 
-        mock_console.add_expected_request_msg_and_return_input("Введите команду: ", "узнать статус пациента")
-        mock_console.add_expected_request_msg_and_return_input("Введите ID пациента:", "3")
+        mock_console.add_expected_message_and_returned_input("Введите команду: ", "узнать статус пациента")
+        mock_console.add_expected_message_and_returned_input("Введите ID пациента:", "3")
         mock_console.add_output_message("Ошибка! Нет пациента с таким ID")
 
-        mock_console.add_expected_request_msg_and_return_input("Введите команду: ", "stop")
+        mock_console.add_expected_message_and_returned_input("Введите команду: ", "stop")
         mock_console.add_output_message("Сеанс завершён")
 
         application.start_operation()
 
-        mock_console.assert_called_mocks()
+        mock_console.assert_no_mocks_left()
