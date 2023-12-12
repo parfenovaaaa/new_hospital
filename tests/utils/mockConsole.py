@@ -16,7 +16,7 @@ class MockConsole:
 
     def assert_called_mocks(self):
         for request in self.request_msg_list:
-            self.console.input.assert_called_with(request)
+            assert self.console.input.call_args_list[self.request_msg_list.index(request)][0][0] == request
         for output_msg in self.output_msg_list:
             assert self.console.output.call_args_list[self.output_msg_list.index(output_msg)][0][0] == output_msg
 
