@@ -12,5 +12,5 @@ if __name__ == '__main__':
     patients_status_list = PatientsStatusListHandler([])
     statistics_commands = StatisticsCommands(dialog_with_user, patients_status_list)
     patient_commands = PatientCommands(dialog_with_user, patients_status_list)
-    command_executor = HospitalApplication(dialog_with_user, statistics_commands, patient_commands)
-    command_executor.start_operation()
+    application = HospitalApplication(dialog_with_user, statistics_commands, patient_commands)
+    application.start_operation()
