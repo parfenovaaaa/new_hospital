@@ -34,9 +34,9 @@ class MockConsole:
     def assert_no_messages_or_inputs_left(self):
         list_of_left_data = []
         if len(self._output_msg_list) > 0:
-            list_of_left_data.append(f"Output message left: {self._output_msg_list}")
+            list_of_left_data.append(f"Output message left: {', '.join(self._output_msg_list)}")
         if len(self._input_msg_list) > 0:
-            list_of_left_data.append(f"Input message left: {self._input_msg_list}")
+            list_of_left_data.append(f"Input message left: {', '.join(self._input_msg_list)}")
         if len(self._input_value_list) > 0:
-            list_of_left_data.append(f"Input value left: {self._input_value_list}")
+            list_of_left_data.append(f"Input value left: {', '.join(self._input_value_list)}")
         assert not list_of_left_data, list_of_left_data

@@ -16,13 +16,15 @@ class TestMockConsole:
         console = MockConsole()
         console.add_output_message("command")
 
-        with pytest.raises(AssertionError):
+        with pytest.raises(AssertionError) as e:
             console.output("not command")
+        assert str(e.value) == f"\nActual output message: not command, \nexpected: command"
 
     def test_mock_console_output_another_command_setted(self):
         console = MockConsole()
-        with pytest.raises(AssertionError):
+        with pytest.raises(AssertionError) as e:
             console.output("not command")
+        assert str(e.value) == "No output messages"
 
     def test_mock_console_input(self):
         console = MockConsole()
@@ -31,21 +33,24 @@ class TestMockConsole:
 
     def test_mock_console_input_no_command_setted(self):
         console = MockConsole()
-        with pytest.raises(AssertionError):
+        with pytest.raises(AssertionError) as e:
             console.input("command")
+        assert str(e.value) == "No input messages"
 
     def test_mock_console_input_another_command_setted(self):
         console = MockConsole()
         console.add_expected_message_and_returned_input("command", "input")
-        with pytest.raises(AssertionError):
+        with pytest.raises(AssertionError) as e:
             console.input("not command")
+        assert str(e.value) == f"\nActual input message: not command, \nexpected: command"
 
     def test_mock_console_input_command_before_not_called(self):
         console = MockConsole()
         console.add_expected_message_and_returned_input("command", "input")
         console.add_expected_message_and_returned_input("not command", "input1")
-        with pytest.raises(AssertionError):
+        with pytest.raises(AssertionError) as e:
             console.input("not command")
+        assert str(e.value) == f"\nActual input message: not command, \nexpected: command"
 
     def test_mock_console_all_done(self):
         console = MockConsole()
@@ -62,7 +67,7 @@ class TestMockConsole:
         console.input("command")
         with pytest.raises(AssertionError) as e:
             console.assert_no_messages_or_inputs_left()
-            assert e.value.message == "Output message left: command"
+        assert str(e.value) == "['Output message left: command']"
 
     def test_mock_console_all_done_error_input(self):
         console = MockConsole()
@@ -71,4 +76,4 @@ class TestMockConsole:
         console.output("command")
         with pytest.raises(AssertionError) as e:
             console.assert_no_messages_or_inputs_left()
-            assert e.value.message == ["Input message left: command", "Input value left: input"]
+        assert str(e.value) == "['Input message left: command', 'Input value left: input']"
