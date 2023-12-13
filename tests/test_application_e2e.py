@@ -3,7 +3,7 @@ from logic.controller.dialog_with_user import DialogWithUser
 from logic.use_case.patient_commands import PatientCommands
 from logic.core.patients_status_list_handler import PatientsStatusListHandler
 from logic.use_case.statistics_commands import StatisticsCommands
-from tests.utils.mockConsole import MockConsole
+from tests.utils.mock_console import MockConsole
 
 
 def prepare_application(console, patients_list):

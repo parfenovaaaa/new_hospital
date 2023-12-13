@@ -1,6 +1,6 @@
 import pytest
 
-from tests.utils.mockConsole import MockConsole
+from tests.utils.mock_console import MockConsole
 
 
 class TestMockConsole:

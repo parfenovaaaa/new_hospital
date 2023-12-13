@@ -12,11 +12,11 @@ class DialogWithUser:
         try:
             patient_id = int(self.ask_user_for_input("Введите ID пациента:"))
             if patient_id <= 0:
-                raise PatientIdNotIntegerOrNotPositive()
+                raise PatientIdNotIntegerOrNotPositive
             else:
                 return patient_id
         except ValueError:
-            raise PatientIdNotIntegerOrNotPositive()
+            raise PatientIdNotIntegerOrNotPositive
 
     def print_to_user_output(self, msg: str) -> None:
         self.console.output(msg)
