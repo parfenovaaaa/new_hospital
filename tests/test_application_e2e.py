@@ -27,7 +27,7 @@ class TestsHospitalApplication:
 
         application.start_operation()
 
-        mock_console.assert_no_mocks_left()
+        mock_console.assert_no_messages_or_inputs_left()
 
     def test_patient_id_invalid_input(self):
 
@@ -54,4 +54,4 @@ class TestsHospitalApplication:
 
         application.start_operation()
 
-        mock_console.assert_no_mocks_left()
+        mock_console.assert_no_messages_or_inputs_left()

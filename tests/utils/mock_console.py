@@ -31,12 +31,12 @@ class MockConsole:
     def _get_current_input_msg_and_input_value(self) -> Tuple:
         return self._input_msg_list.pop(0), self._input_value_list.pop(0)
 
-    def assert_no_mocks_left(self):
-        errors = []
-        if self._output_msg_list:
-            errors.append(f"Output message left: {self._output_msg_list}")
-        if self._input_msg_list:
-            errors.append(f"Input message left: {self._input_msg_list}")
-        if self._input_value_list:
-            errors.append(f"Input value left: {self._input_value_list}")
-        assert not errors, errors
+    def assert_no_messages_or_inputs_left(self):
+        list_of_left_data = []
+        if len(self._output_msg_list) > 0:
+            list_of_left_data.append(f"Output message left: {self._output_msg_list}")
+        if len(self._input_msg_list) > 0:
+            list_of_left_data.append(f"Input message left: {self._input_msg_list}")
+        if len(self._input_value_list) > 0:
+            list_of_left_data.append(f"Input value left: {self._input_value_list}")
+        assert not list_of_left_data, list_of_left_data

@@ -53,7 +53,7 @@ class TestMockConsole:
         console.add_output_message("command")
         console.output("command")
         console.input("command")
-        console.assert_no_mocks_left()
+        console.assert_no_messages_or_inputs_left()
 
     def test_mock_console_all_done_error_output(self):
         console = MockConsole()
@@ -61,7 +61,7 @@ class TestMockConsole:
         console.add_output_message("command")
         console.input("command")
         with pytest.raises(AssertionError) as e:
-            console.assert_no_mocks_left()
+            console.assert_no_messages_or_inputs_left()
             assert e.value.message == "Output message left: command"
 
     def test_mock_console_all_done_error_input(self):
@@ -70,5 +70,5 @@ class TestMockConsole:
         console.add_output_message("command")
         console.output("command")
         with pytest.raises(AssertionError) as e:
-            console.assert_no_mocks_left()
+            console.assert_no_messages_or_inputs_left()
             assert e.value.message == ["Input message left: command", "Input value left: input"]
