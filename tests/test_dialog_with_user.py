@@ -19,8 +19,9 @@ class TestDialogWithUser:
     def test_ask_user_patient_id_with_error(self, patient_id):
         dialog_with_user = DialogWithUser(Console())
         dialog_with_user.ask_user_for_input = MagicMock(return_value=patient_id)
-        with pytest.raises(PatientIdNotIntegerOrNotPositive):
+        with pytest.raises(PatientIdNotIntegerOrNotPositive) as e:
             dialog_with_user.ask_user_patient_id()
+        assert e.value.message == "Ошибка! ID пациента должно быть числом(целым и положительным)"
 
     def test_print_to_user_output(self):
         console = Console()
@@ -41,10 +42,10 @@ class TestDialogWithUser:
     def test_ask_discharge_patient_yes(self, command):
         dialog_with_user = DialogWithUser(Console())
         dialog_with_user.ask_user_for_input = MagicMock(return_value=command)
-        assert dialog_with_user.ask_discharge_patient()
+        assert dialog_with_user.ask_user_to_discharge_patient()
 
     @pytest.mark.parametrize("command", ["ye", "no", "д", "нет"])
     def test_ask_discharge_patient_no(self, command):
         dialog_with_user = DialogWithUser(Console())
         dialog_with_user.ask_user_for_input = MagicMock(return_value=command)
-        assert not dialog_with_user.ask_discharge_patient()
+        assert not dialog_with_user.ask_user_to_discharge_patient()

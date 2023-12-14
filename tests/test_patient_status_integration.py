@@ -21,12 +21,12 @@ class TestPatientStatusUp:
         patient_command.patient_status_up()
 
         dialog_with_user.print_to_user_output.assert_called_with("Новый статус пациента: 'Болен'")
-        assert patients_status_list.patients_status_list == [0, 1, 0]
+        assert patients_status_list._patients_status_list == [0, 1, 0]
 
     def test_patient_status_up_discharge_success(self):
         dialog_with_user = DialogWithUser(Console())
         dialog_with_user.ask_user_patient_id = MagicMock(return_value=2)
-        dialog_with_user.ask_discharge_patient = MagicMock(return_value=True)
+        dialog_with_user.ask_user_to_discharge_patient = MagicMock(return_value=True)
         dialog_with_user.print_to_user_output = MagicMock()
 
         patients_status_list = PatientsStatusListHandler([1, 3, 1])
@@ -34,12 +34,12 @@ class TestPatientStatusUp:
         patient_command.patient_status_up()
 
         dialog_with_user.print_to_user_output.assert_called_with("Пациент выписан из больницы")
-        assert patients_status_list.patients_status_list == [1, 1]
+        assert patients_status_list._patients_status_list == [1, 1]
 
     def test_patient_status_up_discharge_fail(self):
         dialog_with_user = DialogWithUser(Console())
         dialog_with_user.ask_user_patient_id = MagicMock(return_value=2)
-        dialog_with_user.ask_discharge_patient = MagicMock(return_value=False)
+        dialog_with_user.ask_user_to_discharge_patient = MagicMock(return_value=False)
         dialog_with_user.print_to_user_output = MagicMock()
 
         patients_status_list = PatientsStatusListHandler([1, 3, 1])
@@ -47,7 +47,7 @@ class TestPatientStatusUp:
         patient_command.patient_status_up()
 
         dialog_with_user.print_to_user_output.assert_called_with("Пациент остался в статусе: 'Готов к выписке'")
-        assert patients_status_list.patients_status_list == [1, 3, 1]
+        assert patients_status_list._patients_status_list == [1, 3, 1]
 
     @pytest.mark.parametrize("invalid_index, message",
                              [[-1, "Ошибка! ID пациента должно быть числом(целым и положительным)"],
@@ -78,7 +78,7 @@ class TestPatientStatusDown:
         patient_command.patient_status_down()
 
         dialog_with_user.print_to_user_output.assert_called_with("Новый статус пациента: 'Тяжело болен'")
-        assert patients_status_list.patients_status_list == [1, 0, 1]
+        assert patients_status_list._patients_status_list == [1, 0, 1]
 
     def test_patient_status_down_fail(self):
         dialog_with_user = DialogWithUser(Console())
@@ -92,7 +92,7 @@ class TestPatientStatusDown:
         dialog_with_user.print_to_user_output.assert_called_with(
             "Ошибка. Нельзя понизить самый низкий статус(наши пациенты не умирают)"
         )
-        assert patients_status_list.patients_status_list == [3, 0, 3]
+        assert patients_status_list._patients_status_list == [3, 0, 3]
 
     @pytest.mark.parametrize("invalid_index, message",
                              [[-1, "Ошибка! ID пациента должно быть числом(целым и положительным)"],
@@ -128,7 +128,7 @@ class TestDischargePatient:
         patients_command = PatientCommands(dialog_with_user, patients_list)
         patients_command.discharge_patient()
         dialog_with_user.print_to_user_output.assert_called_with("Пациент выписан из больницы")
-        assert patients_list.patients_status_list == [0, 3]
+        assert patients_list._patients_status_list == [0, 3]
 
     @pytest.mark.parametrize("invalid_index, message",
                              [[-1, "Ошибка! ID пациента должно быть числом(целым и положительным)"],

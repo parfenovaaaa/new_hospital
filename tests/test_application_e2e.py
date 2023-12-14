@@ -55,3 +55,30 @@ class TestsHospitalApplication:
         application.start_operation()
 
         mock_console.assert_no_messages_or_inputs_left()
+
+    def test_patient_status_change(self):
+
+        mock_console = MockConsole()
+        application = prepare_application(mock_console, [1, 1, 1, 1])
+        mock_console.add_expected_message_and_returned_input("Введите команду: ", "повысить статус пациента")
+        mock_console.add_expected_message_and_returned_input("Введите ID пациента:", "1")
+
+        mock_console.add_output_message("Новый статус пациента: 'Слегка болен'")
+
+        mock_console.add_expected_message_and_returned_input("Введите команду: ", "понизить статус пациента")
+        mock_console.add_expected_message_and_returned_input("Введите ID пациента:", "2")
+        mock_console.add_output_message("Новый статус пациента: 'Тяжело болен'")
+
+        mock_console.add_expected_message_and_returned_input("Введите команду: ", "выписать пациента")
+        mock_console.add_expected_message_and_returned_input("Введите ID пациента:", "3")
+        mock_console.add_output_message("Пациент выписан из больницы")
+
+        mock_console.add_expected_message_and_returned_input("Введите команду: ", "рассчитать статистику")
+        mock_console.add_output_message("В больнице сейчас 3 чел., из них:\n\tв статусе 'Тяжело болен': 1 чел.\n\tв статусе 'Болен': 1 чел.\n\tв статусе 'Слегка болен': 1 чел.")
+
+        mock_console.add_expected_message_and_returned_input("Введите команду: ", "stop")
+        mock_console.add_output_message("Сеанс завершён")
+
+        application.start_operation()
+
+        mock_console.assert_no_messages_or_inputs_left()
